@@ -1,6 +1,14 @@
 {
-  "extends": "expo/tsconfig.base",
-  "compilerOptions": {
-    "strict": true
-  }
+	"extends": "expo/tsconfig.base",
+	"compilerOptions": {
+		"strict": true,
+		"target": "ES2017",
+		"allowJs": true,
+		"lib": ["es6"],
+		"removeComments": true,
+		"typeRoots": ["./node_modules/@types", "./app"],
+		"resolveJsonModule": true,
+		"forceConsistentCasingInFileNames": true,
+		"jsx": "react-jsx",
+	}
 }
