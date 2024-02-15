@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Login from './app/screens/login';
+import React from 'react';
+import Login from './app/screens/auth/login';
 import { ApplicationProvider, Button, IconRegistry } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -9,7 +9,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Periods } from './app/screens/periods';
 import { TranslationProvider, useTranslation } from './app/contex/TranslationContex';
 import * as NavigationBar from 'expo-navigation-bar';
-
+import { Screens } from './app/screens/screens.conts';
+import Register from './app/screens/auth/register';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,30 +18,38 @@ function App(): React.JSX.Element {
 	const { authState, onLogout } = useAuth();
 	const { i18n } = useTranslation();
 
-	NavigationBar.setBackgroundColorAsync('white')
+	NavigationBar.setBackgroundColorAsync('white');
 
 	if (!i18n) {
-		return <></>
+		return <></>;
 	}
+
+	const NotAuthenticated = () => (
+		<Stack.Navigator>
+			<Stack.Screen name={i18n.t(Screens.login)} navigationKey={Screens.login} component={Login}></Stack.Screen>
+			<Stack.Screen name={i18n.t(Screens.register)} navigationKey={Screens.register} component={Register}></Stack.Screen>
+		</Stack.Navigator>
+	);
+
+	const Authenticated = () => (
+		<Stack.Navigator>
+			<Stack.Screen
+				name={i18n.t(Screens.periods)}
+				component={Periods}
+				navigationKey={Screens.periods}
+				options={{
+					headerRight: () => (
+						<Button appearance='ghost' size='medium' onPress={onLogout}>
+							{i18n.t('interface.exit')}
+						</Button>
+					)
+				}}></Stack.Screen>
+		</Stack.Navigator>
+	);
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator>
-				{authState?.authenticated ? (
-					<Stack.Screen
-						name={i18n.t('interface.periods')}
-						component={Periods}
-						options={{
-							headerRight: () => (
-								<Button appearance='ghost' size='medium' onPress={onLogout}>
-									{i18n.t('interface.exit')}
-								</Button>
-							),
-						}}></Stack.Screen>
-				) : (
-					<Stack.Screen name={i18n.t('interface.login')} component={Login}></Stack.Screen>
-				)}
-			</Stack.Navigator>
+			{authState?.authenticated ? <Authenticated />: <NotAuthenticated />}
 		</NavigationContainer>
 	);
 }

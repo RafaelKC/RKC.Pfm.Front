@@ -1,7 +1,6 @@
-import 'react-native-url-polyfill/auto';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ConsulProvider } from './consul';
+import { AppConfig } from '../../consts/app-config';
 
 export class Supabase {
 	public client?: SupabaseClient;
@@ -10,12 +9,10 @@ export class Supabase {
 		this.initSupabase();
 	}
 
-	private async initSupabase(): Promise<void> {
-		const consulConfig = await new ConsulProvider().configuration();
-
+	private initSupabase(): void {
 		this.client = createClient(
-			consulConfig.supabaseUrl,
-			consulConfig.supabaseUrl,
+			AppConfig.SupabaseURL,
+			AppConfig.SupabaseKey,
 			{
 				auth: {
 					storage: AsyncStorage,

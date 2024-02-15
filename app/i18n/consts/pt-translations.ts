@@ -21,6 +21,7 @@ export const PtTranslations: ITranslations = {
 		exit: 'Sair',
 		login: 'Login',
 		periods: 'Periódos',
+		register: 'Novo usuário'
 	},
 	translations: {
 		pt: 'Português',

@@ -9,6 +9,17 @@ class AxiosResponse<T> {
 }
 
 export class HttpService {
+	constructor() {
+		axios.interceptors.response.use(response => {
+			return response;
+		}, error => {
+			if (error.response.status === 401) {
+				SecureStore.deleteItemAsync(AppConfig.authTokenStorageKey);
+			}
+			return error;
+		});
+	}
+
 	public async post<R>(
 		route: string,
 		body?: object,

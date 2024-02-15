@@ -3,6 +3,7 @@ import { HttpService } from '../utils/http-service';
 import * as SecureStore from 'expo-secure-store';
 import { AppConfig } from '../../consts/app-config';
 import { stringIsNullOrWhiteSpace } from '../utils/string-is-null-or-white-space';
+import { Supabase } from '../utils/supabase';
 
 class Result<T = null> {
 	public error = false;
@@ -35,6 +36,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: any): React.JSX.Element => {
 	const httpService = new HttpService();
+	const supabase = new Supabase()
 
 	const [authState, setAuthState] = useState<{
 		token: string | null;
@@ -49,14 +51,19 @@ export const AuthProvider = ({ children }: any): React.JSX.Element => {
 			const token = await SecureStore.getItemAsync(
 				AppConfig.authTokenStorageKey,
 			);
-			if (!stringIsNullOrWhiteSpace(token)) {
-				setAuthState({
-					token: token,
-					authenticated: true,
-				});
+			const hasToken = !stringIsNullOrWhiteSpace(token);
+
+			if (hasToken) {
+				const user = await supabase.client?.auth.getUser(`${token}`);
+				if (Boolean(user)) {
+					setAuthState({
+						token: token,
+						authenticated: true,
+					});
+				}
 			}
 		};
-		loadToken();
+		loadToken().then();
 	}, []);
 
 	const register = async (
@@ -89,7 +96,7 @@ export const AuthProvider = ({ children }: any): React.JSX.Element => {
 				});
 				await SecureStore.setItemAsync(
 					AppConfig.authTokenStorageKey,
-					result.data.token,
+					result.data.token
 				);
 
 				return { error: false };

@@ -18,6 +18,7 @@ export interface ITranslations {
 	interface: {
 		exit: string;
 		login: string;
+		register: string;
 		periods: string;
 	};
 	translations: {
