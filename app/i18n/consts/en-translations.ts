@@ -23,7 +23,8 @@ export const EnTranslations: ITranslations = {
 		periods: 'Periods',
 		register: 'New User',
 		dark: 'Dark mode',
-		light: 'Light mode'
+		light: 'Light mode',
+		periodsCreate: 'Create Periods'
 	},
 	translations: {
 		pt: 'Portuguese',

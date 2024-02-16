@@ -11,24 +11,29 @@ export function DrawerModa({
 }: {
 	drawer: React.RefObject<DrawerLayoutAndroid>;
 }): React.JSX.Element {
-	const { onLogout } = useAuth();
+	const { onLogout, authState } = useAuth();
 	const { i18n } = useTranslation();
 	const styles = useStyleSheet(baseStyles);
 	if (i18n == null) return <></>;
 
 	return (
 		<Layout style={styles.background}>
-			<Button
-				appearance='ghost'
-				size='medium'
-				onPress={() => {
-					if (onLogout) {
-						onLogout();
-					}
-					drawer.current?.closeDrawer();
-				}}>
-				{i18n.t('interface.exit')}
-			</Button>
+			{
+				authState?.authenticated
+					? <Button
+						appearance='ghost'
+						size='medium'
+						onPress={() => {
+							if (onLogout) {
+								onLogout();
+							}
+							drawer.current?.closeDrawer();
+						}}>
+						{i18n.t('interface.exit')}
+					</Button>
+					: <></>
+			}
+
 			<SwitchTheme></SwitchTheme>
 			<LanguageButton></LanguageButton>
 		</Layout>

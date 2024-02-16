@@ -23,7 +23,8 @@ export const PtTranslations: ITranslations = {
 		periods: 'Periódos',
 		register: 'Novo usuário',
 		dark: 'Modo Escuro',
-		light: 'Modo Claro'
+		light: 'Modo Claro',
+		periodsCreate: 'Criar Periódos'
 	},
 	translations: {
 		pt: 'Português',

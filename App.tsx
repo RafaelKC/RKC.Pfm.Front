@@ -6,7 +6,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { AuthProvider, useAuth } from './app/contex/AuthContext';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Periods } from './app/screens/periods';
+import { Periods } from './app/screens/periods/periods';
 import { TranslationProvider, useTranslation } from './app/contex/TranslationContext';
 import * as NavigationBar from 'expo-navigation-bar';
 import { Screens } from './app/screens/screens.conts';
@@ -17,6 +17,7 @@ import { ThemeProvider, useThemeModes } from './app/contex/ThemeContex';
 import { DrawerLayoutAndroid, TouchableWithoutFeedback } from 'react-native';
 import { DrawerModa } from './app/componets/drawer-modal';
 import { styles } from './styles';
+import { PeriodsCreate } from './app/screens/periods/periods-create';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +66,10 @@ function App(): React.JSX.Element {
 				name={i18n.t(Screens.periods)}
 				component={Periods}
 				navigationKey={Screens.periods}></Stack.Screen>
+			<Stack.Screen
+				name={i18n.t(Screens.periodsCreate)}
+				component={PeriodsCreate}
+				navigationKey={Screens.periodsCreate}></Stack.Screen>
 		</Stack.Navigator>
 	);
 

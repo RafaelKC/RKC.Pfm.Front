@@ -4,18 +4,21 @@ import { Icon, Layout, List, ListItem, Text, useStyleSheet, useTheme } from '@ui
 import { Skeleton } from '@rneui/base';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import { PeriodService } from '../services/period-service';
-import { PeriodsGetListInput } from '../dtos/periods-get-list-input';
-import { PeriodState } from '../enums/period-state.enum';
-import { PeriodsDto } from '../dtos/periods-dto';
-import { PagedResult } from '../dtos/commun/paged-result';
-import { useTranslation } from '../contex/TranslationContext';
+import { PeriodService } from '../../services/period-service';
+import { PeriodsGetListInput } from '../../dtos/periods-get-list-input';
+import { PeriodState } from '../../enums/period-state.enum';
+import { PeriodsDto } from '../../dtos/periods-dto';
+import { PagedResult } from '../../dtos/commun/paged-result';
+import { useTranslation } from '../../contex/TranslationContext';
+import { FAB } from '@rneui/themed';
+import { NavigationProp } from '@react-navigation/native';
+import { Screens } from '../screens.conts';
 
-export function Periods(): React.JSX.Element {
+export function Periods({ navigation }: { navigation: NavigationProp<any> }): React.JSX.Element {
 	const [loaded, setLoaded] = useState(false);
 	const [ascending, setAscending] = useState(true);
 	const [pagedResult, setPagedResult] = useState<PagedResult<PeriodsDto>>();
-	const { locale } = useTranslation();
+	const { locale, i18n } = useTranslation();
 
 	const theme = useTheme();
 	const styles = useStyleSheet(baseStyles);
@@ -88,16 +91,23 @@ export function Periods(): React.JSX.Element {
 					{ascending ? 'Mais antigas primeiro' : 'Mais novas primeiro'}
 				</Text>
 			</Layout>
-			{loaded ? <LoadedScreen /> : <LondingScreen />}
+			{loaded ? <LoadedScreen /> : <LoadingScreen />}
+			<FAB
+				onPress={() => navigation.navigate(i18n?.t(Screens.periodsCreate) ?? Screens.periodsCreate)}
+				style={styles.fab}
+				placement={'right'}
+				color={theme['color-basic-700']}
+				icon={{ name: 'add', color: theme['color-basic-100'] }}
+			/>
 		</Layout>
 	);
 }
 
-const LondingScreen = (): React.JSX.Element[] => {
-	const skenletons = new Array<React.JSX.Element>();
+const LoadingScreen = (): React.JSX.Element[] => {
+	const skeletons = new Array<React.JSX.Element>();
 
 	for (let i = 0; i < 9; i++) {
-		skenletons.push(
+		skeletons.push(
 			<Skeleton
 				LinearGradientComponent={LinearGradient}
 				animation='wave'
@@ -108,7 +118,7 @@ const LondingScreen = (): React.JSX.Element[] => {
 		);
 	}
 
-	return skenletons;
+	return skeletons;
 };
 
 const baseStyles = StyleSheet.create({
@@ -143,4 +153,7 @@ const baseStyles = StyleSheet.create({
 	list: {
 		backgroundColor: 'invisivble',
 	},
+	fab: {
+		marginBottom: 32
+	}
 });

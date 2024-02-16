@@ -22,6 +22,7 @@ export interface ITranslations {
 		periods: string;
 		dark: string;
 		light: string;
+		periodsCreate: string;
 	};
 	translations: {
 		pt: string
