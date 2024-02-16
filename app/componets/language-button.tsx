@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, ButtonGroup, Layout } from '@ui-kitten/components';
-import { useTranslation } from '../contex/TranslationContex';
+import { useTranslation } from '../contex/TranslationContext';
 import * as SecureStore from 'expo-secure-store';
 import { AppConfig } from '../../consts/app-config';
 

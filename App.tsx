@@ -3,14 +3,15 @@ import Login from './app/screens/auth/login';
 import { ApplicationProvider, Button, IconRegistry } from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { AuthProvider, useAuth } from './app/contex/AuthContex';
+import { AuthProvider, useAuth } from './app/contex/AuthContext';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Periods } from './app/screens/periods';
-import { TranslationProvider, useTranslation } from './app/contex/TranslationContex';
+import { TranslationProvider, useTranslation } from './app/contex/TranslationContext';
 import * as NavigationBar from 'expo-navigation-bar';
 import { Screens } from './app/screens/screens.conts';
 import Register from './app/screens/auth/register';
+import { SupabaseProvider } from './app/contex/SupabaseContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,12 +58,14 @@ function App(): React.JSX.Element {
 export default () => (
 	<>
 		<IconRegistry icons={EvaIconsPack} />
-		<AuthProvider>
-			<TranslationProvider>
-				<ApplicationProvider {...eva} theme={eva.light}>
-					<App />
-				</ApplicationProvider>
-			</TranslationProvider>
-		</AuthProvider>
+		<SupabaseProvider>
+			<AuthProvider>
+				<TranslationProvider>
+					<ApplicationProvider {...eva} theme={eva.light}>
+						<App />
+					</ApplicationProvider>
+				</TranslationProvider>
+			</AuthProvider>
+		</SupabaseProvider>
 	</>
 );

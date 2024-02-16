@@ -3,7 +3,8 @@ import { HttpService } from '../utils/http-service';
 import * as SecureStore from 'expo-secure-store';
 import { AppConfig } from '../../consts/app-config';
 import { stringIsNullOrWhiteSpace } from '../utils/string-is-null-or-white-space';
-import { Supabase } from '../utils/supabase';
+import { useSupabase } from './SupabaseContext';
+
 
 class Result<T = null> {
 	public error = false;
@@ -35,8 +36,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: any): React.JSX.Element => {
-	const httpService = new HttpService();
-	const supabase = new Supabase()
+	const { supabase } = useSupabase();
 
 	const [authState, setAuthState] = useState<{
 		token: string | null;
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: any): React.JSX.Element => {
 			const hasToken = !stringIsNullOrWhiteSpace(token);
 
 			if (hasToken) {
-				const user = await supabase.client?.auth.getUser(`${token}`);
+				const user = await supabase.auth.getUser(`${token}`);
 				if (Boolean(user)) {
 					setAuthState({
 						token: token,
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }: any): React.JSX.Element => {
 		name: string,
 	): Promise<Result> => {
 		try {
-			await httpService.post<void>('users', { email, password, name });
+			await HttpService.post<void>('users', { email, password, name });
 			return { error: false };
 		} catch (e) {
 			return { error: true };
@@ -84,7 +84,7 @@ export const AuthProvider = ({ children }: any): React.JSX.Element => {
 		password: string,
 	): Promise<Result<LoginResult>> => {
 		try {
-			const result = await httpService.post<LoginResult>('login', {
+			const result = await HttpService.post<LoginResult>('login', {
 				email,
 				password,
 			});
@@ -109,7 +109,7 @@ export const AuthProvider = ({ children }: any): React.JSX.Element => {
 
 	const logout = async (): Promise<Result> => {
 		try {
-			await httpService.post('logout');
+			await HttpService.post('logout');
 			setAuthState({
 				token: null,
 				authenticated: false,

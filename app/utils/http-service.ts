@@ -8,7 +8,16 @@ class AxiosResponse<T> {
 }
 
 export class HttpService {
-	constructor() {
+	public static async post<R>(
+		route: string,
+		body?: object,
+	): Promise<AxiosResponse<R>> {
+		this.setInterceptors();
+		const config = await this.getConfig();
+		return axios.post<any, AxiosResponse<R>>(route, body, config);
+	}
+
+	private static setInterceptors = () => {
 		axios.interceptors.response.use(response => {
 			return response;
 		}, error => {
@@ -19,15 +28,7 @@ export class HttpService {
 		});
 	}
 
-	public async post<R>(
-		route: string,
-		body?: object,
-	): Promise<AxiosResponse<R>> {
-		const config = await this.getConfig();
-		return axios.post<any, AxiosResponse<R>>(route, body, config);
-	}
-
-	private async getConfig<T = null>(): Promise<AxiosRequestConfig<T>> {
+	private static async getConfig<T = null>(): Promise<AxiosRequestConfig<T>> {
 		const config = {} as AxiosRequestConfig<T>;
 
 		config.baseURL = process.env.EXPO_PUBLIC_BACK_URL;
