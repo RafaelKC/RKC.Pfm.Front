@@ -13,10 +13,10 @@ interface TranslationProps {
 	setLocale?: (locale: string) => void
 }
 
-const TranslationContex = createContext<TranslationProps>({});
+const TranslationContext = createContext<TranslationProps>({});
 
 export const useTranslation = () => {
-	return useContext(TranslationContex);
+	return useContext(TranslationContext);
 };
 
 export const TranslationProvider = ({ children }: any): React.JSX.Element => {
@@ -45,5 +45,5 @@ export const TranslationProvider = ({ children }: any): React.JSX.Element => {
 		locale
 	} as TranslationProps;
 
-	return <TranslationContex.Provider value={value}>{children}</TranslationContex.Provider>;
+	return <TranslationContext.Provider value={value}>{children}</TranslationContext.Provider>;
 };

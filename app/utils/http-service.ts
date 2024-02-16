@@ -2,7 +2,6 @@ import axios, { AxiosRequestConfig } from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { AppConfig } from '../../consts/app-config';
 import { stringIsNullOrWhiteSpace } from './string-is-null-or-white-space';
-import { Environment } from '../../environment/environment.dev';
 
 class AxiosResponse<T> {
 	data?: T;
@@ -31,7 +30,7 @@ export class HttpService {
 	private async getConfig<T = null>(): Promise<AxiosRequestConfig<T>> {
 		const config = {} as AxiosRequestConfig<T>;
 
-		config.baseURL = Environment.backUrl;
+		config.baseURL = process.env.EXPO_PUBLIC_BACK_URL;
 
 		const authToken = await SecureStore.getItemAsync(
 			AppConfig.authTokenStorageKey,

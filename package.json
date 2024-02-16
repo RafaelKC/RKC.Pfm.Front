@@ -24,9 +24,9 @@
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",
     "axios": "^1.6.7",
-    "consul-node": "^0.0.2",
     "expo": "~50.0.6",
     "expo-localization": "~14.8.3",
+    "expo-navigation-bar": "~2.8.1",
     "expo-secure-store": "~12.8.1",
     "expo-status-bar": "~1.11.1",
     "i18n-js": "^4.4.2",
@@ -37,11 +37,10 @@
     "react-native-svg": "14.1.0",
     "react-native-web": "~0.19.6",
     "zod": "^3.22.4",
-    "expo-navigation-bar": "~2.8.1"
+    "expo-dev-client": "~3.3.8"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@types/consul": "^0.40.3",
     "@types/react": "~18.2.45",
     "@types/react-native": "^0.73.0",
     "eslint": "^8.56.0",
