@@ -20,6 +20,8 @@ export interface ITranslations {
 		login: string;
 		register: string;
 		periods: string;
+		dark: string;
+		light: string;
 	};
 	translations: {
 		pt: string

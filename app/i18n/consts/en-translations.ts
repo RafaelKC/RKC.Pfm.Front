@@ -21,7 +21,9 @@ export const EnTranslations: ITranslations = {
 		exit: 'Exit',
 		login: 'Login',
 		periods: 'Periods',
-		register: 'New User'
+		register: 'New User',
+		dark: 'Dark mode',
+		light: 'Light mode'
 	},
 	translations: {
 		pt: 'Portuguese',

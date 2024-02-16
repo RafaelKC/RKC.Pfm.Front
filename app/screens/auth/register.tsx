@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Icon, Layout, Spinner, Text } from '@ui-kitten/components';
+import { Button, Icon, Layout, Spinner, Text, useTheme } from '@ui-kitten/components';
 import { StyleSheet, TouchableWithoutFeedback, Alert } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { RkcInput } from '../../componets/rkc-input';
@@ -10,6 +10,7 @@ import { useTranslation } from '../../contex/TranslationContext';
 import { LanguageButton } from '../../componets/language-button';
 import { NavigationProp } from '@react-navigation/native';
 import { Screens } from '../screens.conts';
+import { SwitchTheme } from '../../componets/switch-theme';
 
 const userSchema = z.object({
 	name: z.string().min(3),
@@ -22,6 +23,7 @@ type UserType = z.infer<typeof userSchema>;
 export default function Register({ navigation }: { navigation: NavigationProp<any> }): React.JSX.Element {
 	const [secureTextEntry, setSecureTextEntry] = useState(true);
 	const [saving, setSaving] = useState(false);
+	const theme = useTheme();
 
 	const { i18n } = useTranslation();
 	if (!i18n) {
@@ -55,7 +57,7 @@ export default function Register({ navigation }: { navigation: NavigationProp<an
 
 	const renderIcon = (): React.ReactElement => (
 		<TouchableWithoutFeedback onPress={toggleSecureEntry}>
-			<Icon style={styles.icon} fill='#8F9BB3' name={secureTextEntry ? 'eye-off' : 'eye'} />
+			<Icon style={styles.icon} fill={theme['text-basic-color']} name={secureTextEntry ? 'eye-off' : 'eye'} />
 		</TouchableWithoutFeedback>
 	);
 
@@ -122,7 +124,10 @@ export default function Register({ navigation }: { navigation: NavigationProp<an
 				</Layout>
 			</Layout>
 
-			<LanguageButton></LanguageButton>
+			<Layout style={styles.layoutButton}>
+				<LanguageButton></LanguageButton>
+				<SwitchTheme></SwitchTheme>
+			</Layout>
 		</Layout>
 	);
 }
@@ -148,6 +153,11 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'space-between',
 		alignItems: 'center',
+	},
+	layoutButton: {
+		display: 'flex',
+		flexDirection: 'row',
+		gap: 8
 	},
 	input: {
 		width: '100%',

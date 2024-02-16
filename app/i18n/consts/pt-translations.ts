@@ -21,7 +21,9 @@ export const PtTranslations: ITranslations = {
 		exit: 'Sair',
 		login: 'Login',
 		periods: 'Periódos',
-		register: 'Novo usuário'
+		register: 'Novo usuário',
+		dark: 'Modo Escuro',
+		light: 'Modo Claro'
 	},
 	translations: {
 		pt: 'Português',

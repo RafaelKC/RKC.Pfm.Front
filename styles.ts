@@ -7,4 +7,8 @@ export const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	icon: {
+		width: 32,
+		height: 32,
+	}
 });

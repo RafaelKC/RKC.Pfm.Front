@@ -17,12 +17,42 @@ export class HttpService {
 		return axios.post<any, AxiosResponse<R>>(route, body, config);
 	}
 
+	public static async get<R>(
+		route: string,
+		params?: object,
+	): Promise<AxiosResponse<R>> {
+		this.setInterceptors();
+		const config = await this.getConfig();
+		config.params = params;
+
+		return axios.get<any, AxiosResponse<R>>(route, config);
+	}
+
+	public static async put<R>(
+		route: string,
+		body?: object,
+	): Promise<AxiosResponse<R>> {
+		this.setInterceptors();
+		const config = await this.getConfig();
+
+		return axios.put<any, AxiosResponse<R>>(route, body, config);
+	}
+
+	public static async delete<R>(
+		route: string,
+	): Promise<AxiosResponse<R>> {
+		this.setInterceptors();
+		const config = await this.getConfig();
+
+		return axios.delete<any, AxiosResponse<R>>(route, config);
+	}
+
 	private static setInterceptors = () => {
 		axios.interceptors.response.use(response => {
 			return response;
 		}, error => {
 			if (error.response.status === 401) {
-				SecureStore.deleteItemAsync(AppConfig.authTokenStorageKey);
+				// SecureStore.deleteItemAsync(AppConfig.authTokenStorageKey);
 			}
 			return error;
 		});
