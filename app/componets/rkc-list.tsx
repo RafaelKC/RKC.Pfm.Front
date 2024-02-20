@@ -108,7 +108,7 @@ function RkcListComponent<TItem>(
 		</TouchableWithoutFeedback>);
 	}
 
-	return <>{loaded ? <LoadedScreen /> : <NotLoadedScreen/>}</>;
+	return <Layout style={baseStyles.backgroud}>{loaded ? <LoadedScreen /> : <NotLoadedScreen/>}</Layout>;
 }
 
 const LoadingScreen = (): React.JSX.Element[] => {
@@ -136,6 +136,10 @@ const baseStyles = StyleSheet.create({
 	},
 	list: {
 		backgroundColor: 'invisivble',
+		width: '100%',
+		height: '100%',
+		gap: 8,
+		display: 'flex',
 	},
 	reloadIcon: {
 		width: 24,
@@ -148,5 +152,15 @@ const baseStyles = StyleSheet.create({
 		gap: 8,
 		justifyContent: 'center',
 		alignItems: 'center'
+	},
+	backgroud: {
+		backgroundColor: 'invisivble',
+		display: 'flex',
+		gap: 5,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: '100%',
+		height: '100%'
 	}
 });

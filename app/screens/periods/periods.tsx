@@ -121,6 +121,8 @@ const baseStyles = StyleSheet.create({
 		backgroundColor: 'background-basic-color-4',
 		borderRadius: 5,
 		height: 75,
+		width: '100%',
+		marginBottom: 5
 	},
 	fab: {
 		marginBottom: 32
