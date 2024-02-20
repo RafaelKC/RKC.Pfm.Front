@@ -27,5 +27,12 @@ export interface ITranslations {
 	translations: {
 		pt: string
 		en: string
+	};
+	components: {
+		list: {
+			empty: string;
+			load: string;
+			error: string;
+		}
 	}
 }

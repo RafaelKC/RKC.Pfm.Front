@@ -29,5 +29,12 @@ export const EnTranslations: ITranslations = {
 	translations: {
 		pt: 'Portuguese',
 		en: 'English'
+	},
+	components: {
+		list: {
+			load: 'Load items',
+			empty: 'No items, reload?',
+			error: 'Error, reload?',
+		}
 	}
 };

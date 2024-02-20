@@ -29,5 +29,12 @@ export const PtTranslations: ITranslations = {
 	translations: {
 		pt: 'Português',
 		en: 'Inglês'
+	},
+	components: {
+		list: {
+			load: 'Carregar itens.',
+			empty: 'Sem itens, recarregar?',
+			error: 'Erro, recarregar?',
+		}
 	}
 };
