@@ -109,12 +109,12 @@ export const AuthProvider = ({ children }: any): React.JSX.Element => {
 
 	const logout = async (): Promise<Result> => {
 		try {
-			await HttpService.post('logout');
 			setAuthState({
 				token: null,
 				authenticated: false,
 			});
 			await SecureStore.deleteItemAsync(AppConfig.authTokenStorageKey);
+			await HttpService.post('logout');
 			return { error: false };
 		} catch (e) {
 			return { error: true };
