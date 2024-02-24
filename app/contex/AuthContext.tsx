@@ -3,7 +3,6 @@ import { HttpService } from '../utils/http-service';
 import * as SecureStore from 'expo-secure-store';
 import { AppConfig } from '../../consts/app-config';
 import { stringIsNullOrWhiteSpace } from '../utils/string-is-null-or-white-space';
-import { useSupabase } from './SupabaseContext';
 
 
 class Result<T = null> {
@@ -36,8 +35,6 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: any): React.JSX.Element => {
-	const { supabase } = useSupabase();
-
 	const [authState, setAuthState] = useState<{
 		token: string | null;
 		authenticated: boolean | null;
@@ -54,12 +51,18 @@ export const AuthProvider = ({ children }: any): React.JSX.Element => {
 			const hasToken = !stringIsNullOrWhiteSpace(token);
 
 			if (hasToken) {
-				const user = await supabase.auth.getUser(`${token}`);
-				if (Boolean(user)) {
-					setAuthState({
-						token: token,
-						authenticated: true,
-					});
+				try {
+					const isLoged = await HttpService.get('auth/is-login-valid')
+					if (isLoged) {
+						setAuthState({
+							token: token,
+							authenticated: true,
+						});
+					} else {
+						await SecureStore.deleteItemAsync(AppConfig.authTokenStorageKey)
+					}
+				} catch  {
+					await SecureStore.deleteItemAsync(AppConfig.authTokenStorageKey)
 				}
 			}
 		};
@@ -84,7 +87,7 @@ export const AuthProvider = ({ children }: any): React.JSX.Element => {
 		password: string,
 	): Promise<Result<LoginResult>> => {
 		try {
-			const result = await HttpService.post<LoginResult>('login', {
+			const result = await HttpService.post<LoginResult>('auth/login', {
 				email,
 				password,
 			});
@@ -114,7 +117,7 @@ export const AuthProvider = ({ children }: any): React.JSX.Element => {
 				authenticated: false,
 			});
 			await SecureStore.deleteItemAsync(AppConfig.authTokenStorageKey);
-			await HttpService.post('logout');
+			await HttpService.post('auth/logout');
 			return { error: false };
 		} catch (e) {
 			return { error: true };

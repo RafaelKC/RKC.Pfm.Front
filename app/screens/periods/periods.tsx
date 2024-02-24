@@ -12,6 +12,8 @@ import { NavigationProp } from '@react-navigation/native';
 import { Screens } from '../screens.conts';
 import { IRkcListRef, RkcList } from '../../componets/rkc-list';
 import { PagedFilteredInput } from '../../dtos/commun/paged-filtered-input';
+import 'moment/locale/pt-br';
+
 
 export function Periods({ navigation }: { navigation: NavigationProp<any> }): React.JSX.Element {
 	const [ascending, setAscending] = useState(true);
@@ -82,7 +84,7 @@ export function Periods({ navigation }: { navigation: NavigationProp<any> }): Re
 						fill={theme['text-basic-color']}></Icon>
 				</TouchableWithoutFeedback>
 				<Text category='label' style={styles.actionText}>
-					{ascending ? 'Mais antigas primeiro' : 'Mais novas primeiro'}
+					{ascending ? i18n?.t('screens.periods.oldestFirst') : i18n?.t('screens.periods.newestFirst')}
 				</Text>
 			</Layout>
 			<RkcList loadOnInit={true} loadItems={loadPeriods} ref={childRef} renderItem={renderItem} />

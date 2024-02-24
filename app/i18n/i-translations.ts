@@ -28,6 +28,12 @@ export interface ITranslations {
 		pt: string
 		en: string
 	};
+	screens: {
+		periods: {
+			oldestFirst: string;
+			newestFirst: string;
+		}
+	};
 	components: {
 		list: {
 			empty: string;

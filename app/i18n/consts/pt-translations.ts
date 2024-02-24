@@ -36,5 +36,11 @@ export const PtTranslations: ITranslations = {
 			empty: 'Sem itens, recarregar?',
 			error: 'Erro, recarregar?',
 		}
-	}
+	},
+	screens: {
+		periods: {
+			oldestFirst: 'Mais antigas primeiro',
+			newestFirst: 'Mais novas primeiro',
+		},
+	},
 };

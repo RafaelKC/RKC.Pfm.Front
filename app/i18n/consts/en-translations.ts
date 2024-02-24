@@ -24,17 +24,23 @@ export const EnTranslations: ITranslations = {
 		register: 'New User',
 		dark: 'Dark mode',
 		light: 'Light mode',
-		periodsCreate: 'Create Periods'
+		periodsCreate: 'Create Periods',
 	},
 	translations: {
 		pt: 'Portuguese',
-		en: 'English'
+		en: 'English',
 	},
 	components: {
 		list: {
 			load: 'Load items',
 			empty: 'No items, reload?',
 			error: 'Error, reload?',
-		}
-	}
+		},
+	},
+	screens: {
+		periods: {
+			oldestFirst: 'Oldest first',
+			newestFirst: 'Newest first',
+		},
+	},
 };

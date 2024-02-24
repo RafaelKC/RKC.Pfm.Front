@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useThemeModes } from '../contex/ThemeContex';
 import { Layout, Text, Toggle } from '@ui-kitten/components';
 import { useTranslation } from '../contex/TranslationContext';
@@ -7,6 +7,10 @@ export function SwitchTheme(): React.JSX.Element {
 	const { themeMode, setTheme } = useThemeModes();
 	const { i18n } = useTranslation();
 	const [checked, setChecked] = useState(themeMode === 'dark');
+
+	useEffect(() => {
+		setChecked(themeMode === 'dark')
+	}, [themeMode]);
 
 	if (i18n == null) {
 		return <></>;
