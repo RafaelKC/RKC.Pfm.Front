@@ -25,7 +25,7 @@ function RkcListComponent<TItem>(
 	ref: React.ForwardedRef<IRkcListRef>): React.JSX.Element {
 	useImperativeHandle(ref, () => ({
 		reload() {
-			load();
+			load().then();
 		},
 	}));
 
@@ -57,7 +57,7 @@ function RkcListComponent<TItem>(
 
 	useEffect(() => {
 		if (loadOnInit) {
-			load();
+			load().then();
 		}
 	}, []);
 
